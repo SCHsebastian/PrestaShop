@@ -1,7 +1,6 @@
 
 package es.mercaelche.prestashop.db.classes;
 
-import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.Expose;
@@ -96,31 +95,31 @@ public class User {
     private String dateUpd;
     @SerializedName("years")
     @Expose
-    private Integer years;
+    private String years;
     @SerializedName("days")
     @Expose
-    private Integer days;
+    private String days;
     @SerializedName("months")
     @Expose
-    private Integer months;
+    private String months;
     @SerializedName("geoloc_id_country")
     @Expose
-    private Integer geolocIdCountry;
+    private String geolocIdCountry;
     @SerializedName("geoloc_id_state")
     @Expose
-    private Integer geolocIdState;
+    private String geolocIdState;
     @SerializedName("geoloc_postcode")
     @Expose
-    private Integer geolocPostcode;
+    private String geolocPostcode;
     @SerializedName("logged")
     @Expose
     private Integer logged;
     @SerializedName("id_guest")
     @Expose
-    private Integer idGuest;
+    private String idGuest;
     @SerializedName("groupBox")
     @Expose
-    private Integer groupBox;
+    private String groupBox;
     @SerializedName("id_shop_list")
     @Expose
     private List<Object> idShopList = null;
@@ -352,51 +351,51 @@ public class User {
         this.dateUpd = dateUpd;
     }
 
-    public Integer getYears() {
+    public String getYears() {
         return years;
     }
 
-    public void setYears(Integer years) {
+    public void setYears(String years) {
         this.years = years;
     }
 
-    public Integer getDays() {
+    public String getDays() {
         return days;
     }
 
-    public void setDays(Integer days) {
+    public void setDays(String days) {
         this.days = days;
     }
 
-    public Integer getMonths() {
+    public String getMonths() {
         return months;
     }
 
-    public void setMonths(Integer months) {
+    public void setMonths(String months) {
         this.months = months;
     }
 
-    public Integer getGeolocIdCountry() {
+    public String getGeolocIdCountry() {
         return geolocIdCountry;
     }
 
-    public void setGeolocIdCountry(Integer geolocIdCountry) {
+    public void setGeolocIdCountry(String geolocIdCountry) {
         this.geolocIdCountry = geolocIdCountry;
     }
 
-    public Integer getGeolocIdState() {
+    public String getGeolocIdState() {
         return geolocIdState;
     }
 
-    public void setGeolocIdState(Integer geolocIdState) {
+    public void setGeolocIdState(String geolocIdState) {
         this.geolocIdState = geolocIdState;
     }
 
-    public Integer getGeolocPostcode() {
+    public String getGeolocPostcode() {
         return geolocPostcode;
     }
 
-    public void setGeolocPostcode(Integer geolocPostcode) {
+    public void setGeolocPostcode(String geolocPostcode) {
         this.geolocPostcode = geolocPostcode;
     }
 
@@ -408,19 +407,19 @@ public class User {
         this.logged = logged;
     }
 
-    public Integer getIdGuest() {
+    public String getIdGuest() {
         return idGuest;
     }
 
-    public void setIdGuest(Integer idGuest) {
+    public void setIdGuest(String idGuest) {
         this.idGuest = idGuest;
     }
 
-    public Integer getGroupBox() {
+    public String getGroupBox() {
         return groupBox;
     }
 
-    public void setGroupBox(Integer groupBox) {
+    public void setGroupBox(String groupBox) {
         this.groupBox = groupBox;
     }
 
@@ -440,4 +439,48 @@ public class User {
         this.forceId = forceId;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + id + '\'' +
+                ", idShop='" + idShop + '\'' +
+                ", idShopGroup='" + idShopGroup + '\'' +
+                ", note='" + note + '\'' +
+                ", idGender='" + idGender + '\'' +
+                ", idDefaultGroup='" + idDefaultGroup + '\'' +
+                ", idLang='" + idLang + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", email='" + email + '\'' +
+                ", newsletter='" + newsletter + '\'' +
+                ", ipRegistrationNewsletter='" + ipRegistrationNewsletter + '\'' +
+                ", newsletterDateAdd='" + newsletterDateAdd + '\'' +
+                ", optin='" + optin + '\'' +
+                ", website='" + website + '\'' +
+                ", company='" + company + '\'' +
+                ", siret='" + siret + '\'' +
+                ", ape='" + ape + '\'' +
+                ", outstandingAllowAmount='" + outstandingAllowAmount + '\'' +
+                ", showPublicPrices='" + showPublicPrices + '\'' +
+                ", idRisk='" + idRisk + '\'' +
+                ", maxPaymentDays='" + maxPaymentDays + '\'' +
+                ", active='" + active + '\'' +
+                ", isGuest='" + isGuest + '\'' +
+                ", deleted='" + deleted + '\'' +
+                ", dateAdd='" + dateAdd + '\'' +
+                ", dateUpd='" + dateUpd + '\'' +
+                ", years='" + years + '\'' +
+                ", days='" + days + '\'' +
+                ", months='" + months + '\'' +
+                ", geolocIdCountry='" + geolocIdCountry + '\'' +
+                ", geolocIdState='" + geolocIdState + '\'' +
+                ", geolocPostcode='" + geolocPostcode + '\'' +
+                ", logged=" + logged +
+                ", idGuest='" + idGuest + '\'' +
+                ", groupBox='" + groupBox + '\'' +
+                ", idShopList=" + idShopList +
+                ", forceId=" + forceId +
+                '}';
+    }
 }

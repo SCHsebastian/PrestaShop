@@ -18,10 +18,10 @@ import es.mercaelche.prestashop.databinding.FragmentHomeBinding;
 import es.mercaelche.prestashop.db.classes.User;
 import es.mercaelche.prestashop.db.retrofit.ApiUtils;
 import es.mercaelche.prestashop.db.retrofit.UserApi;
-import es.mercaelche.prestashop.db.retrofit.responses.LoginResponse;
+import es.mercaelche.prestashop.db.retrofit.responses.Response;
+import es.mercaelche.prestashop.utils.dialogs.RegisterDialog;
 import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 public class HomeFragment extends Fragment {
 
@@ -40,7 +40,7 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         iniciarUi(homeViewModel);
-        userApi = ApiUtils.gerUserApi();
+        userApi = ApiUtils.gerUserApiJSON();
 
 
         return root;
@@ -54,6 +54,8 @@ public class HomeFragment extends Fragment {
         EditText etPass = binding.etPass;
 
         Button btnIniciar = binding.btnIniciarSesion;
+        Button btnRegistrar = binding.btnRegistrarse;
+
 
         btnIniciar.setOnClickListener(v1 -> {
             String correo = etCorreo.getText().toString();
@@ -61,27 +63,54 @@ public class HomeFragment extends Fragment {
             login(correo, pass);
         });
 
+        btnRegistrar.setOnClickListener(v1 -> {
+
+            RegisterDialog dialog = RegisterDialog.newInstance();
+
+            RegisterDialog.OnRegisterListener listener = this::registrar;
+            dialog.setOnRegisterListener(listener);
+
+            dialog.show(getParentFragmentManager(), "RegisterDialog");
+
+        });
+
     }
 
-    private void login(String correo, String pass) {
-        userApi.login(correo, pass).enqueue(new Callback<LoginResponse>() {
-
+    private void registrar(String correo, String pass, String nombre, String apellidos) {
+        userApi.register(correo, pass, nombre, apellidos).enqueue(new Callback<Response>() {
             @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                String data = response.toString();
-                Log.d("Login", data);
+            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
                 if (response.isSuccessful()) {
-                    LoginResponse loginResponse = response.body();
-                    if (loginResponse.getCode() == 200) {
-                        User user = loginResponse.getPsdata().getUser();
-                        Toast.makeText(getContext(), "Bienvenido " + user.getFirstname(), Toast.LENGTH_LONG).show();
-                    }
+                    Toast.makeText(getContext(), "Login : "+response.message(), Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), "Error al registrar usuario" + response.message(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Log.d("Login", t.getMessage());
+            public void onFailure(Call<Response> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al registrar usuario"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void login(String email, String pass) {
+        userApi.login(email,pass).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+                if (response.isSuccessful()) {
+                    User user = response.body();
+                    Log.d("Login", "Login correcto: " + user.toString());
+                } else {
+                    Toast.makeText(getContext(), "Error al iniciar sesión" + response.message(), Toast.LENGTH_SHORT).show();
+                }
+                Log.d("Error", response.message()+ " "+response.code());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Toast.makeText(getContext(), "Error al iniciar sesión"+ t.getMessage(), Toast.LENGTH_SHORT).show();
+                Log.d("Error", t.getMessage());
             }
         });
     }

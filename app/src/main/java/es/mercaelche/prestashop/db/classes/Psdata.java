@@ -21,9 +21,22 @@ public class Psdata {
     @SerializedName("cart_count")
     @Expose
     private Integer cartCount;
+
     @SerializedName("user")
     @Expose
     private User user;
+
+    @SerializedName("registered")
+    @Expose
+    private Boolean registered;
+
+    public Boolean getRegistered() {
+        return registered;
+    }
+
+    public void setRegistered(Boolean registered) {
+        this.registered = registered;
+    }
 
     public String getStatus() {
         return status;

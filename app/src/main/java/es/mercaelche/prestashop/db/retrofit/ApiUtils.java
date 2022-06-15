@@ -1,12 +1,14 @@
 package es.mercaelche.prestashop.db.retrofit;
 
-import es.mercaelche.prestashop.db.retrofit.responses.LoginResponse;
-
 public class ApiUtils {
 
-    public static final String BASE_URL = "https://casadelafortuna.es/rest/";
+    public static final String BASE_URL = "https://casadelafortuna.es/";
 
-    public static UserApi gerUserApi() {
-        return RetrofitClient.getClient(BASE_URL).create(UserApi.class);
+    public static UserApi gerUserApiJSON() {
+        return RetrofitClient.getClientJSON(BASE_URL).create(UserApi.class);
+    }
+
+    public static StandarApi getUserApiXML() {
+        return RetrofitClient.getClientXML(BASE_URL).create(StandarApi.class);
     }
 }
