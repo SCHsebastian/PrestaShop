@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Casa de la Fortuna</string>
+    <string name="title_home">Inicio</string>
+    <string name="title_notifications">Notificaciones</string>
+    <string name="label_tienda">Tienda</string>
+</resources>
