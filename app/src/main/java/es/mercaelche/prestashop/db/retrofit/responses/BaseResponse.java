@@ -1,20 +1,10 @@
 package es.mercaelche.prestashop.db.retrofit.responses;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
 
-import es.mercaelche.prestashop.db.classes.Psdata;
+public class BaseResponse {
 
-public class Response {
-
-    @SerializedName("success")
-    @Expose
     private Boolean success;
-    @SerializedName("code")
-    @Expose
     private Integer code;
-    @SerializedName("psdata")
-    @Expose
     private Psdata psdata;
 
     public Boolean getSuccess() {

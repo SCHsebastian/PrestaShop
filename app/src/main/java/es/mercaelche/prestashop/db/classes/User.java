@@ -1,131 +1,50 @@
-
 package es.mercaelche.prestashop.db.classes;
 
 import java.util.List;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
-
 public class User {
 
-    @SerializedName("id")
-    @Expose
     private String id;
-    @SerializedName("id_shop")
-    @Expose
     private String idShop;
-    @SerializedName("id_shop_group")
-    @Expose
     private String idShopGroup;
-    @SerializedName("note")
-    @Expose
     private String note;
-    @SerializedName("id_gender")
-    @Expose
     private String idGender;
-    @SerializedName("id_default_group")
-    @Expose
     private String idDefaultGroup;
-    @SerializedName("id_lang")
-    @Expose
     private String idLang;
-    @SerializedName("lastname")
-    @Expose
     private String lastname;
-    @SerializedName("firstname")
-    @Expose
     private String firstname;
-    @SerializedName("birthday")
-    @Expose
     private String birthday;
-    @SerializedName("email")
-    @Expose
     private String email;
-    @SerializedName("newsletter")
-    @Expose
     private String newsletter;
-    @SerializedName("ip_registration_newsletter")
-    @Expose
     private String ipRegistrationNewsletter;
-    @SerializedName("newsletter_date_add")
-    @Expose
     private String newsletterDateAdd;
-    @SerializedName("optin")
-    @Expose
     private String optin;
-    @SerializedName("website")
-    @Expose
     private String website;
-    @SerializedName("company")
-    @Expose
     private String company;
-    @SerializedName("siret")
-    @Expose
     private String siret;
-    @SerializedName("ape")
-    @Expose
     private String ape;
-    @SerializedName("outstanding_allow_amount")
-    @Expose
     private String outstandingAllowAmount;
-    @SerializedName("show_public_prices")
-    @Expose
     private String showPublicPrices;
-    @SerializedName("id_risk")
-    @Expose
     private String idRisk;
-    @SerializedName("max_payment_days")
-    @Expose
     private String maxPaymentDays;
-    @SerializedName("active")
-    @Expose
     private String active;
-    @SerializedName("is_guest")
-    @Expose
     private String isGuest;
-    @SerializedName("deleted")
-    @Expose
     private String deleted;
-    @SerializedName("date_add")
-    @Expose
     private String dateAdd;
-    @SerializedName("date_upd")
-    @Expose
     private String dateUpd;
-    @SerializedName("years")
-    @Expose
-    private String years;
-    @SerializedName("days")
-    @Expose
-    private String days;
-    @SerializedName("months")
-    @Expose
-    private String months;
-    @SerializedName("geoloc_id_country")
-    @Expose
-    private String geolocIdCountry;
-    @SerializedName("geoloc_id_state")
-    @Expose
-    private String geolocIdState;
-    @SerializedName("geoloc_postcode")
-    @Expose
-    private String geolocPostcode;
-    @SerializedName("logged")
-    @Expose
+    private Object years;
+    private Object days;
+    private Object months;
+    private Object geolocIdCountry;
+    private Object geolocIdState;
+    private Object geolocPostcode;
     private Integer logged;
-    @SerializedName("id_guest")
-    @Expose
-    private String idGuest;
-    @SerializedName("groupBox")
-    @Expose
-    private String groupBox;
-    @SerializedName("id_shop_list")
-    @Expose
+    private Object idGuest;
+    private Object groupBox;
     private List<Object> idShopList = null;
-    @SerializedName("force_id")
-    @Expose
     private Boolean forceId;
+
+    private String cookie;
 
     public String getId() {
         return id;
@@ -351,51 +270,51 @@ public class User {
         this.dateUpd = dateUpd;
     }
 
-    public String getYears() {
+    public Object getYears() {
         return years;
     }
 
-    public void setYears(String years) {
+    public void setYears(Object years) {
         this.years = years;
     }
 
-    public String getDays() {
+    public Object getDays() {
         return days;
     }
 
-    public void setDays(String days) {
+    public void setDays(Object days) {
         this.days = days;
     }
 
-    public String getMonths() {
+    public Object getMonths() {
         return months;
     }
 
-    public void setMonths(String months) {
+    public void setMonths(Object months) {
         this.months = months;
     }
 
-    public String getGeolocIdCountry() {
+    public Object getGeolocIdCountry() {
         return geolocIdCountry;
     }
 
-    public void setGeolocIdCountry(String geolocIdCountry) {
+    public void setGeolocIdCountry(Object geolocIdCountry) {
         this.geolocIdCountry = geolocIdCountry;
     }
 
-    public String getGeolocIdState() {
+    public Object getGeolocIdState() {
         return geolocIdState;
     }
 
-    public void setGeolocIdState(String geolocIdState) {
+    public void setGeolocIdState(Object geolocIdState) {
         this.geolocIdState = geolocIdState;
     }
 
-    public String getGeolocPostcode() {
+    public Object getGeolocPostcode() {
         return geolocPostcode;
     }
 
-    public void setGeolocPostcode(String geolocPostcode) {
+    public void setGeolocPostcode(Object geolocPostcode) {
         this.geolocPostcode = geolocPostcode;
     }
 
@@ -407,19 +326,19 @@ public class User {
         this.logged = logged;
     }
 
-    public String getIdGuest() {
+    public Object getIdGuest() {
         return idGuest;
     }
 
-    public void setIdGuest(String idGuest) {
+    public void setIdGuest(Object idGuest) {
         this.idGuest = idGuest;
     }
 
-    public String getGroupBox() {
+    public Object getGroupBox() {
         return groupBox;
     }
 
-    public void setGroupBox(String groupBox) {
+    public void setGroupBox(Object groupBox) {
         this.groupBox = groupBox;
     }
 
@@ -437,6 +356,14 @@ public class User {
 
     public void setForceId(Boolean forceId) {
         this.forceId = forceId;
+    }
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
     }
 
     @Override
@@ -470,17 +397,18 @@ public class User {
                 ", deleted='" + deleted + '\'' +
                 ", dateAdd='" + dateAdd + '\'' +
                 ", dateUpd='" + dateUpd + '\'' +
-                ", years='" + years + '\'' +
-                ", days='" + days + '\'' +
-                ", months='" + months + '\'' +
-                ", geolocIdCountry='" + geolocIdCountry + '\'' +
-                ", geolocIdState='" + geolocIdState + '\'' +
-                ", geolocPostcode='" + geolocPostcode + '\'' +
+                ", years=" + years +
+                ", days=" + days +
+                ", months=" + months +
+                ", geolocIdCountry=" + geolocIdCountry +
+                ", geolocIdState=" + geolocIdState +
+                ", geolocPostcode=" + geolocPostcode +
                 ", logged=" + logged +
-                ", idGuest='" + idGuest + '\'' +
-                ", groupBox='" + groupBox + '\'' +
+                ", idGuest=" + idGuest +
+                ", groupBox=" + groupBox +
                 ", idShopList=" + idShopList +
                 ", forceId=" + forceId +
+                ", cookie='" + cookie + '\'' +
                 '}';
     }
 }

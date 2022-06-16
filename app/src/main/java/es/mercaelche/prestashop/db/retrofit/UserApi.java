@@ -1,7 +1,7 @@
 package es.mercaelche.prestashop.db.retrofit;
 
 import es.mercaelche.prestashop.db.classes.User;
-import es.mercaelche.prestashop.db.retrofit.responses.Response;
+import es.mercaelche.prestashop.db.retrofit.responses.BaseResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -18,15 +18,15 @@ public interface UserApi {
 
    @POST("/rest/register")
    @FormUrlEncoded
-   Call<Response> register(@Field("email") String email,
-                           @Field("password") String passwd,
-                           @Field("firstname") String firstname,
-                           @Field("lastname") String lastname);
+   Call<BaseResponse> register(@Field("email") String email,
+                               @Field("password") String passwd,
+                               @Field("firstname") String firstname,
+                               @Field("lastname") String lastname);
 
     @GET("/rest/logout")
-    Call<Response> logout();
+    Call<BaseResponse> logout(@Header("Cookie") String cookie);
 
     @GET("/rest")
-    Call<Response> test();
+    Call<BaseResponse> test();
 
 }

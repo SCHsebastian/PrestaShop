@@ -1,42 +1,15 @@
+package es.mercaelche.prestashop.db.retrofit.responses;
 
-package es.mercaelche.prestashop.db.classes;
-
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
+import es.mercaelche.prestashop.db.classes.User;
 
 public class Psdata {
 
-    @SerializedName("status")
-    @Expose
     private String status;
-    @SerializedName("message")
-    @Expose
     private String message;
-    @SerializedName("customer_id")
-    @Expose
     private String customerId;
-    @SerializedName("session_data")
-    @Expose
     private Integer sessionData;
-    @SerializedName("cart_count")
-    @Expose
     private Integer cartCount;
-
-    @SerializedName("user")
-    @Expose
     private User user;
-
-    @SerializedName("registered")
-    @Expose
-    private Boolean registered;
-
-    public Boolean getRegistered() {
-        return registered;
-    }
-
-    public void setRegistered(Boolean registered) {
-        this.registered = registered;
-    }
 
     public String getStatus() {
         return status;
