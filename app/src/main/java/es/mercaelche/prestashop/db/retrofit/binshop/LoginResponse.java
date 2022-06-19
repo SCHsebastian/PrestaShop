@@ -1,7 +1,11 @@
-package es.mercaelche.prestashop.db.retrofit.responses;
+
+package es.mercaelche.prestashop.db.retrofit.binshop;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 
-public class BaseResponse {
+public class LoginResponse {
 
     private Boolean success;
     private Integer code;

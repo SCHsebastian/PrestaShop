@@ -10,5 +10,6 @@
     <dimen name="space_between_items">8dp</dimen>
     <dimen name="space_body_to_buttons">24dp</dimen>
     <dimen name="titlespace">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

@@ -1,7 +1,7 @@
 package es.mercaelche.prestashop.db.retrofit;
 
 import es.mercaelche.prestashop.db.classes.User;
-import es.mercaelche.prestashop.db.retrofit.responses.BaseResponse;
+import es.mercaelche.prestashop.db.retrofit.binshop.BaseResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;

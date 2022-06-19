@@ -1,4 +1,4 @@
-package es.mercaelche.prestashop.db.retrofit.responses;
+package es.mercaelche.prestashop.db.retrofit.binshop;
 
 import es.mercaelche.prestashop.db.classes.User;
 

@@ -11,20 +11,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModelProvider;
-
-import java.util.Collections;
-import java.util.List;
 
 import es.mercaelche.prestashop.databinding.FragmentHomeBinding;
 import es.mercaelche.prestashop.db.classes.User;
 import es.mercaelche.prestashop.db.retrofit.ApiUtils;
 import es.mercaelche.prestashop.db.retrofit.UserApi;
-import es.mercaelche.prestashop.db.retrofit.responses.BaseResponse;
+import es.mercaelche.prestashop.db.retrofit.binshop.BaseResponse;
+import es.mercaelche.prestashop.db.retrofit.standard.products;
 import es.mercaelche.prestashop.utils.dialogs.RegisterDialog;
-import okhttp3.Headers;
-import okhttp3.internal.http2.Header;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -44,28 +42,50 @@ public class HomeFragment extends Fragment {
         final TextView textView = binding.tvTitulo;
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        iniciarUi(homeViewModel);
+        iniciarUi();
         userApi = ApiUtils.getUserApi();
 
 
         return root;
     }
 
-    private void iniciarUi(HomeViewModel v) {
+    private void iniciarUi() {
+
+        if(!isSesionActiva()) {
+            uiInicioSesion();
+        }else {
+            uiProductos();
+        }
+
+    }
+
+    private boolean isSesionActiva() {
+        //DatabaseManager db = DatabaseManager.getInstance().getUserDao().getUser();
+        return false;
+    }
+
+    private void uiProductos() {
+
+        binding.lytProductos.setVisibility(View.VISIBLE);
+        MutableLiveData<products> products = new ViewModelProvider(this).get(HomeViewModel.class).getProducts();
+
+
+    }
+
+    private void uiInicioSesion() {
+
+        binding.lytSesion.setVisibility(View.VISIBLE);
 
         EditText etCorreo = binding.etCorreo;
         EditText etPass = binding.etPass;
 
-        Button btnIniciar = binding.btnIniciarSesion;
-        Button btnRegistrar = binding.btnRegistrarse;
-
-        btnIniciar.setOnClickListener(v1 -> {
+        binding.btnIniciarSesion.setOnClickListener(v1 -> {
             String correo = etCorreo.getText().toString();
             String pass = etPass.getText().toString();
             login(correo, pass);
         });
 
-        btnRegistrar.setOnClickListener(v1 -> {
+        binding.btnRegistrarse.setOnClickListener(v1 -> {
 
             RegisterDialog dialog = RegisterDialog.newInstance();
 

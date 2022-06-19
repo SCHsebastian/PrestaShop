@@ -11,9 +11,8 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 public class RetrofitClient {
 
     private static Retrofit retrofit = null;
-    private static Retrofit retrofitXML = null;
 
-    private static String API_KEY = "T8748FNG4B66MS6R4GR1PEAKZJQHN9S6";
+    private static final String API_KEY = "T8748FNG4B66MS6R4GR1PEAKZJQHN9S6";
 
 
     public static Retrofit getClientJSON(String baseUrl) {
