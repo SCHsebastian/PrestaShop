@@ -9,6 +9,8 @@ import es.mercaelche.prestashop.db.retrofit.standard.products;
 public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
+    private MutableLiveData<products> mProducts;
+    private products productos;
 
     public HomeViewModel() {
         mText = new MutableLiveData<>();
@@ -20,8 +22,9 @@ public class HomeViewModel extends ViewModel {
     }
 
     public MutableLiveData<products> getProducts() {
-
-
-        return null;
+        if (mProducts == null){
+            mProducts = new MutableLiveData<products>();
+        }
+        return mProducts;
     }
 }

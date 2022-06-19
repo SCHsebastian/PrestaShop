@@ -44,7 +44,8 @@ public class User {
     private List<Object> idShopList = null;
     private Boolean forceId;
 
-    private String cookie;
+    private String cookieName;
+    private String cookieValue;
 
     public String getId() {
         return id;
@@ -358,12 +359,20 @@ public class User {
         this.forceId = forceId;
     }
 
-    public String getCookie() {
-        return cookie;
+    public String getCookieName() {
+        return cookieName;
     }
 
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
+    public void setCookieName(String cookieName) {
+        this.cookieName = cookieName;
+    }
+
+    public String getCookieValue() {
+        return cookieValue;
+    }
+
+    public void setCookieValue(String cookieValue) {
+        this.cookieValue = cookieValue;
     }
 
     @Override
@@ -408,7 +417,8 @@ public class User {
                 ", groupBox=" + groupBox +
                 ", idShopList=" + idShopList +
                 ", forceId=" + forceId +
-                ", cookie='" + cookie + '\'' +
+                ", cookie='" + cookieName + '\'' +
+                ", cookieValue='"+cookieValue+'\''+
                 '}';
     }
 }

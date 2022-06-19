@@ -7,8 +7,8 @@ public class Psdata {
     private String status;
     private String message;
     private String customerId;
-    private Integer sessionData;
-    private Integer cartCount;
+    private int sessionData;
+    private int cartCount;
     private User user;
 
     public String getStatus() {
@@ -35,19 +35,19 @@ public class Psdata {
         this.customerId = customerId;
     }
 
-    public Integer getSessionData() {
+    public int getSessionData() {
         return sessionData;
     }
 
-    public void setSessionData(Integer sessionData) {
+    public void setSessionData(int sessionData) {
         this.sessionData = sessionData;
     }
 
-    public Integer getCartCount() {
+    public int getCartCount() {
         return cartCount;
     }
 
-    public void setCartCount(Integer cartCount) {
+    public void setCartCount(int cartCount) {
         this.cartCount = cartCount;
     }
 

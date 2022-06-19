@@ -5,16 +5,18 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+
+import java.util.Arrays;
+import java.util.List;
 
 import es.mercaelche.prestashop.databinding.FragmentHomeBinding;
 import es.mercaelche.prestashop.db.classes.User;
@@ -23,6 +25,7 @@ import es.mercaelche.prestashop.db.retrofit.UserApi;
 import es.mercaelche.prestashop.db.retrofit.binshop.BaseResponse;
 import es.mercaelche.prestashop.db.retrofit.standard.products;
 import es.mercaelche.prestashop.utils.dialogs.RegisterDialog;
+import es.mercaelche.prestashop.utils.recyclers.ProductsRecycler;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -68,7 +71,12 @@ public class HomeFragment extends Fragment {
 
         binding.lytProductos.setVisibility(View.VISIBLE);
         MutableLiveData<products> products = new ViewModelProvider(this).get(HomeViewModel.class).getProducts();
-
+        final Observer<es.mercaelche.prestashop.db.retrofit.standard.products> productsObserver = new Observer<products>() {
+            @Override
+            public void onChanged(es.mercaelche.prestashop.db.retrofit.standard.products products) {
+                binding.rvProductos.setAdapter(new ProductsRecycler(products));
+            }
+        };
 
     }
 
@@ -122,9 +130,10 @@ public class HomeFragment extends Fragment {
             public void onResponse(Call<User> call, retrofit2.Response<User> response) {
                 if (response.isSuccessful()) {
                     User user = response.body();
-                    user.setCookie(response.headers().get("set-cookie"));
+                    setCookie(response.headers().get("set-cookie"), user);
+                    /*user.setCookie(response.headers().get("set-cookie"));
                     Log.d("Login", "Login correcto: " + user.toString());
-                    Log.d("Token", ""+user.getCookie());
+                    Log.d("Token", ""+user.getCookie());*/
                 } else {
                     Toast.makeText(getContext(), "Error al iniciar sesión" + response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -137,6 +146,16 @@ public class HomeFragment extends Fragment {
                 Log.d("Error", t.getMessage());
             }
         });
+    }
+
+    private void setCookie(String s,User user) {
+
+        List<String> splitted = Arrays.asList(s.split(";"));
+        List<String> doubleSplitted = Arrays.asList(splitted.get(0).split("="));
+
+        user.setCookieName(doubleSplitted.get(0));
+        user.setCookieValue(doubleSplitted.get(1));
+
     }
 
 

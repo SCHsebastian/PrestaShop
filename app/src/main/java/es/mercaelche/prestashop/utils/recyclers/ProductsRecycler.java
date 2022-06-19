@@ -6,9 +6,20 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import es.mercaelche.prestashop.db.retrofit.standard.product;
+import es.mercaelche.prestashop.db.retrofit.standard.products;
+
 public class ProductsRecycler extends RecyclerView.Adapter<ProductsRecycler.ViewHolder> {
 
     private OnItemClickListener mListener;
+
+    public ProductsRecycler(products productos) {
+        for (product producto: productos.getProduct()) {
+            producto.getName();
+            producto.getId_default_image().getHref();
+            producto.getPrice();
+        }
+    }
 
     @NonNull
     @Override
