@@ -14,13 +14,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.room.Room;
 
 import java.util.Arrays;
 import java.util.List;
 
 import es.mercaelche.prestashop.databinding.FragmentHomeBinding;
+import es.mercaelche.prestashop.db.UserDb;
 import es.mercaelche.prestashop.db.classes.User;
-import es.mercaelche.prestashop.db.retrofit.ApiUtils;
+import es.mercaelche.prestashop.db.retrofit.RetrofitClient;
 import es.mercaelche.prestashop.db.retrofit.UserApi;
 import es.mercaelche.prestashop.db.retrofit.binshop.BaseResponse;
 import es.mercaelche.prestashop.db.retrofit.standard.products;
@@ -33,6 +35,7 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private UserApi userApi;
+    private UserDb.AppDatabase db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class HomeFragment extends Fragment {
         homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
         iniciarUi();
-        userApi = ApiUtils.getUserApi();
+        userApi = RetrofitClient.getApiService();
 
 
         return root;
@@ -63,7 +66,11 @@ public class HomeFragment extends Fragment {
     }
 
     private boolean isSesionActiva() {
-        //DatabaseManager db = DatabaseManager.getInstance().getUserDao().getUser();
+        db = Room.databaseBuilder(getContext(),
+                UserDb.AppDatabase.class, "database-name").build();
+        UserDb.UserDao userDao = db.userDao();
+        if (userDao.getUser()!=null)
+            return true;
         return false;
     }
 
@@ -125,15 +132,17 @@ public class HomeFragment extends Fragment {
     }
 
     private void login(String email, String pass) {
-        userApi.login(email,pass).enqueue(new Callback<User>() {
+        userApi.login(email,pass).enqueue(new Callback<BaseResponse>() {
             @Override
-            public void onResponse(Call<User> call, retrofit2.Response<User> response) {
+            public void onResponse(Call<BaseResponse> call, retrofit2.Response<BaseResponse> response) {
                 if (response.isSuccessful()) {
-                    User user = response.body();
+                    User user = response.body().getPsdata().getUser();
+                    if (user!=null){
+                        db.userDao().insert(new UserDb.User(user.getFirstname(),user.getLastname(),user.getEmail(), user.getCookieName(), user.getCookieValue()));
+                    }
                     setCookie(response.headers().get("set-cookie"), user);
-                    /*user.setCookie(response.headers().get("set-cookie"));
                     Log.d("Login", "Login correcto: " + user.toString());
-                    Log.d("Token", ""+user.getCookie());*/
+                    Log.d("Token", ""+user.getCookieName()+ "\n" +user.getCookieValue());
                 } else {
                     Toast.makeText(getContext(), "Error al iniciar sesión" + response.message(), Toast.LENGTH_SHORT).show();
                 }
@@ -141,7 +150,7 @@ public class HomeFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<User> call, Throwable t) {
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
                 Toast.makeText(getContext(), "Error al iniciar sesión"+ t.getMessage(), Toast.LENGTH_SHORT).show();
                 Log.d("Error", t.getMessage());
             }

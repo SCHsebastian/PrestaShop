@@ -1,6 +1,8 @@
 package es.mercaelche.prestashop.db.retrofit.binshop;
 
 
+import com.google.gson.JsonObject;
+
 public class BaseResponse {
 
     private Boolean success;

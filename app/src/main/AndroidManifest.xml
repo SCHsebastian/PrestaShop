@@ -17,7 +17,7 @@
         android:theme="@style/Theme.PrestaShop"
         tools:targetApi="31">
         <activity
-            android:name=".ActProducto"
+            android:name=".ui.product.ActProducto"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

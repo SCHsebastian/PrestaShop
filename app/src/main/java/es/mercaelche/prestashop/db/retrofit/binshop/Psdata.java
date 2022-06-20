@@ -1,5 +1,7 @@
 package es.mercaelche.prestashop.db.retrofit.binshop;
 
+import com.google.gson.JsonObject;
+
 import es.mercaelche.prestashop.db.classes.User;
 
 public class Psdata {
