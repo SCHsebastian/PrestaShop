@@ -4,7 +4,8 @@
     <string name="title_dashboard" translatable="false">Dashboard</string>
     <string name="title_notifications">Notifications</string>
     <string name="label_tienda">Shop</string>
-    <string name="title_activity_act_product">ActProduct</string>
+    <string name="error_carga_productos">"Error while loading products"</string>
+    <string name="title_activity_act_product" translatable="false">ActProduct</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
     <string name="second_fragment_label">Second Fragment</string>

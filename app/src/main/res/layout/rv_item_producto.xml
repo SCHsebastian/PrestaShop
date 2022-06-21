@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/ivProductoAdapter"
             android:layout_width="64dp"
             android:layout_height="64dp"
             tools:srcCompat="@tools:sample/avatars" />
@@ -24,7 +24,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/tvNombreProductoAdapter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Titulo "
@@ -36,14 +36,14 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/textView9"
+                    android:id="@+id/tvPrecioAnteriorAdapter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Precio anterior" />
 
                 <TextView
-                    android:id="@+id/textView10"
+                    android:id="@+id/tvPrecioAdapter"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

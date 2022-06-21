@@ -6,28 +6,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.room.Room;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.Arrays;
 import java.util.List;
 
 import es.mercaelche.prestashop.databinding.FragmentHomeBinding;
+import es.mercaelche.prestashop.db.PrestaDB;
+import es.mercaelche.prestashop.db.UserDao;
 import es.mercaelche.prestashop.db.UserDb;
 import es.mercaelche.prestashop.db.classes.User;
-import es.mercaelche.prestashop.db.retrofit.RetrofitClient;
+import es.mercaelche.prestashop.db.retrofit.ApiUtils;
 import es.mercaelche.prestashop.db.retrofit.UserApi;
 import es.mercaelche.prestashop.db.retrofit.binshop.BaseResponse;
-import es.mercaelche.prestashop.db.retrofit.standard.products;
+import es.mercaelche.prestashop.db.retrofit.prestashop.ResponseProduct;
+import es.mercaelche.prestashop.utils.adapters.AdaptProductos;
 import es.mercaelche.prestashop.utils.dialogs.RegisterDialog;
-import es.mercaelche.prestashop.utils.recyclers.ProductsRecycler;
 import retrofit2.Call;
 import retrofit2.Callback;
 
@@ -35,27 +38,28 @@ public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
     private UserApi userApi;
-    private UserDb.AppDatabase db;
+    private PrestaDB db;
+    private UserDao userDao;
+    private HomeViewModel homeViewModel;
+    private AdaptProductos adaptProductos;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        HomeViewModel homeViewModel =
-                new ViewModelProvider(this).get(HomeViewModel.class);
+        homeViewModel = new HomeViewModel(getActivity());
 
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.tvTitulo;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-
         iniciarUi();
-        userApi = RetrofitClient.getApiService();
+        userApi = ApiUtils.getUserApi();
 
 
         return root;
     }
 
     private void iniciarUi() {
+        db = PrestaDB.getInstance(getActivity());
+        userDao = db.userDao();
 
         if(!isSesionActiva()) {
             uiInicioSesion();
@@ -66,10 +70,8 @@ public class HomeFragment extends Fragment {
     }
 
     private boolean isSesionActiva() {
-        db = Room.databaseBuilder(getContext(),
-                UserDb.AppDatabase.class, "database-name").build();
-        UserDb.UserDao userDao = db.userDao();
-        if (userDao.getUser()!=null)
+        UserDb usuario = userDao.getUser();
+        if (usuario!=null)
             return true;
         return false;
     }
@@ -77,13 +79,20 @@ public class HomeFragment extends Fragment {
     private void uiProductos() {
 
         binding.lytProductos.setVisibility(View.VISIBLE);
-        MutableLiveData<products> products = new ViewModelProvider(this).get(HomeViewModel.class).getProducts();
-        final Observer<es.mercaelche.prestashop.db.retrofit.standard.products> productsObserver = new Observer<products>() {
-            @Override
-            public void onChanged(es.mercaelche.prestashop.db.retrofit.standard.products products) {
-                binding.rvProductos.setAdapter(new ProductsRecycler(products));
+        LiveData<List<ResponseProduct.product>> productos = homeViewModel.getProducts();
+
+        productos.observe(getViewLifecycleOwner(), listaProductos -> {
+            if (listaProductos.size()>0){
+                RecyclerView lstProductos = binding.rvProductos;
+                lstProductos.setLayoutManager(new LinearLayoutManager(getContext()));
+                adaptProductos = new AdaptProductos(listaProductos, getContext());
+                lstProductos.setAdapter(adaptProductos);
             }
-        };
+        });
+
+        binding.btReload.setOnClickListener(view -> {
+            homeViewModel.loadProductos();
+        });
 
     }
 
@@ -138,15 +147,20 @@ public class HomeFragment extends Fragment {
                 if (response.isSuccessful()) {
                     User user = response.body().getPsdata().getUser();
                     if (user!=null){
-                        db.userDao().insert(new UserDb.User(user.getFirstname(),user.getLastname(),user.getEmail(), user.getCookieName(), user.getCookieValue()));
+                        UserDb antiguo = db.userDao().getUser();
+                        if (antiguo!=null){
+                            db.userDao().delete(antiguo);
+                        }
+                        setCookie(response.headers().get("set-cookie"), user);
+                        db.userDao().insert(new UserDb(user.getFirstname(),user.getLastname(),user.getEmail(), user.getCookieName(), user.getCookieValue()));
+                        binding.lytSesion.setVisibility(View.GONE);
+                        uiProductos();
+                    }else {
+                        Toast.makeText(getContext(), "Error al iniciar sesión" + response.message(), Toast.LENGTH_SHORT).show();
                     }
-                    setCookie(response.headers().get("set-cookie"), user);
-                    Log.d("Login", "Login correcto: " + user.toString());
-                    Log.d("Token", ""+user.getCookieName()+ "\n" +user.getCookieValue());
                 } else {
                     Toast.makeText(getContext(), "Error al iniciar sesión" + response.message(), Toast.LENGTH_SHORT).show();
                 }
-                Log.d("Error", response.message()+ " "+response.code());
             }
 
             @Override
